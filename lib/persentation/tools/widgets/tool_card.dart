@@ -77,7 +77,9 @@ class _ToolCard extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          BorrowedToolsRoute().go(context);
+                        },
                         child: const Text(
                           'Pinjamkan',
                           style: TextStyle(

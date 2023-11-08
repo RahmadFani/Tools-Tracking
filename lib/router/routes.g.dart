@@ -18,6 +18,12 @@ RouteBase get $appRoute => ShellRouteData.$route(
         GoRouteData.$route(
           path: '/tools',
           factory: $ToolsRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'borrowed',
+              factory: $BorrowedToolsRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -31,6 +37,24 @@ extension $ToolsRouteExtension on ToolsRoute {
 
   String get location => GoRouteData.$location(
         '/tools',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $BorrowedToolsRouteExtension on BorrowedToolsRoute {
+  static BorrowedToolsRoute _fromState(GoRouterState state) =>
+      BorrowedToolsRoute();
+
+  String get location => GoRouteData.$location(
+        '/tools/borrowed',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tools_tracking/persentation/app/app.dart';
+import 'package:tools_tracking/persentation/borrowed_tools/borrowed_tools.dart';
 
 import 'package:tools_tracking/persentation/splash/splash.dart';
 import 'package:tools_tracking/persentation/tools/tools.dart';
@@ -10,9 +11,16 @@ part 'routes.g.dart';
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
 
-@TypedShellRoute<AppRoute>(routes: [
-  TypedGoRoute<ToolsRoute>(path: '/tools'),
-])
+@TypedShellRoute<AppRoute>(
+  routes: [
+    TypedGoRoute<ToolsRoute>(
+      path: '/tools',
+      routes: [
+        TypedGoRoute<BorrowedToolsRoute>(path: 'borrowed'),
+      ],
+    ),
+  ],
+)
 class AppRoute extends ShellRouteData {
   const AppRoute();
 
@@ -45,5 +53,12 @@ class SplashRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SplashPage();
+  }
+}
+
+class BorrowedToolsRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const BorrowedToolsPage();
   }
 }

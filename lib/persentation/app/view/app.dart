@@ -41,20 +41,23 @@ class AppShellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String location = GoRouterState.of(context).uri.toString();
     return Scaffold(
       body: child,
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.toll_outlined),
-            label: 'Alat',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.supervised_user_circle_outlined),
-            label: 'Teman',
-          ),
-        ],
-      ),
+      bottomNavigationBar: location == '/tools' || location == '/friends'
+          ? NavigationBar(
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.toll_outlined),
+                  label: 'Alat',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.supervised_user_circle_outlined),
+                  label: 'Teman',
+                ),
+              ],
+            )
+          : null,
     );
   }
 }
