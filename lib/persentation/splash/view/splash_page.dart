@@ -22,32 +22,22 @@ class SplashView extends StatelessWidget {
           Image.asset('assets/icons/tools.png')
               .animate()
               .scale(duration: 400.milliseconds),
-          Animate().toggle(
-            duration: 600.ms,
-            builder: (_, value, __) => AnimatedContainer(
-              duration: 600.ms,
-              height: value ? 0 : 40,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: const Text(
-                  'Tools Tracking',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ).animate(
-                  onComplete: (controller) async {
-                    await Future.delayed(500.milliseconds);
-                    if (context.mounted) {
-                      HomeRoute().go(context);
-                    }
-                  },
-                ).fadeIn(
-                  delay: 700.milliseconds,
-                  duration: 600.milliseconds,
-                ),
-              ),
+          const Text(
+            'Tools Tracking',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
             ),
+          ).animate(
+            onComplete: (controller) async {
+              await Future.delayed(500.milliseconds);
+              if (context.mounted) {
+                ToolsRoute().go(context);
+              }
+            },
+          ).fadeIn(
+            delay: 700.milliseconds,
+            duration: 600.milliseconds,
           ),
         ],
       ),

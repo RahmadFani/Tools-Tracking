@@ -19,6 +19,14 @@ class AppView extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ),
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
       routerConfig: getIt<GoRouter>(),
@@ -33,6 +41,20 @@ class AppShellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return child;
+    return Scaffold(
+      body: child,
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.toll_outlined),
+            label: 'Alat',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.supervised_user_circle_outlined),
+            label: 'Teman',
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -16,8 +16,8 @@ RouteBase get $appRoute => ShellRouteData.$route(
       factory: $AppRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/home',
-          factory: $HomeRouteExtension._fromState,
+          path: '/tools',
+          factory: $ToolsRouteExtension._fromState,
         ),
       ],
     );
@@ -26,11 +26,11 @@ extension $AppRouteExtension on AppRoute {
   static AppRoute _fromState(GoRouterState state) => const AppRoute();
 }
 
-extension $HomeRouteExtension on HomeRoute {
-  static HomeRoute _fromState(GoRouterState state) => HomeRoute();
+extension $ToolsRouteExtension on ToolsRoute {
+  static ToolsRoute _fromState(GoRouterState state) => ToolsRoute();
 
   String get location => GoRouteData.$location(
-        '/home',
+        '/tools',
       );
 
   void go(BuildContext context) => context.go(location);
