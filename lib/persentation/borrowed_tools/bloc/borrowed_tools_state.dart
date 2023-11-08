@@ -11,4 +11,12 @@ class BorrowedToolsState extends Equatable {
   List<Object?> get props => [
         borrowed,
       ];
+
+  BorrowedToolsState copyWith({
+    List<BorrowedTools>? borrowed,
+  }) {
+    return BorrowedToolsState(
+      borrowed: borrowed ?? this.borrowed,
+    );
+  }
 }

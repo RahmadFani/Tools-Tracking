@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,7 +11,7 @@ part 'friends_bloc.g.dart';
 
 class FriendsBloc extends HydratedBloc<FriendsEvent, FriendsState> {
   FriendsBloc() : super(const FriendsState()) {
-    on<AddFriend>((event, emit) {});
+    on<AddFriend>(_onAddFriend);
   }
 
   @override
@@ -20,5 +22,9 @@ class FriendsBloc extends HydratedBloc<FriendsEvent, FriendsState> {
   @override
   Map<String, dynamic>? toJson(FriendsState state) {
     return _$FriendsStateToJson(state);
+  }
+
+  FutureOr<void> _onAddFriend(AddFriend event, Emitter<FriendsState> emit) {
+    emit(state.copyWith(friends: [...state.friends, event.friends]));
   }
 }

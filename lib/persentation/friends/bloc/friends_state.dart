@@ -9,4 +9,12 @@ class FriendsState extends Equatable {
   });
   @override
   List<Object?> get props => [friends];
+
+  FriendsState copyWith({
+    List<Friends>? friends,
+  }) {
+    return FriendsState(
+      friends: friends ?? this.friends,
+    );
+  }
 }
