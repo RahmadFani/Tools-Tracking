@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:tools_tracking/persentation/app/app.dart';
 import 'package:tools_tracking/persentation/borrowed_tools/borrowed_tools.dart';
+import 'package:tools_tracking/persentation/friend_loan/friend_loan.dart';
 import 'package:tools_tracking/persentation/friends/friends.dart';
-
 import 'package:tools_tracking/persentation/splash/splash.dart';
 import 'package:tools_tracking/persentation/tools/tools.dart';
 
@@ -20,7 +22,9 @@ final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
         TypedGoRoute<BorrowedToolsRoute>(path: 'borrowed'),
       ],
     ),
-    TypedGoRoute<FriendsRoute>(path: '/friends')
+    TypedGoRoute<FriendsRoute>(path: '/friends', routes: [
+      TypedGoRoute<FriendLoanRoute>(path: 'loan'),
+    ])
   ],
 )
 class AppRoute extends ShellRouteData {
@@ -90,6 +94,20 @@ class BorrowedToolsRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return BorrowedToolsPage(
       toolsId: toolsId,
+    );
+  }
+}
+
+class FriendLoanRoute extends GoRouteData {
+  final String userUid;
+  FriendLoanRoute({
+    required this.userUid,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return FriendLoanPage(
+      userUid: userUid,
     );
   }
 }
