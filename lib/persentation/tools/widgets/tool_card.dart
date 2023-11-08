@@ -78,7 +78,8 @@ class _ToolCard extends StatelessWidget {
                           backgroundColor: Theme.of(context).primaryColor,
                         ),
                         onPressed: () {
-                          BorrowedToolsRoute().go(context);
+                          BorrowedToolsRoute(toolsId: tool.idUnique)
+                              .go(context);
                         },
                         child: const Text(
                           'Pinjamkan',

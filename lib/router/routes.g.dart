@@ -51,10 +51,15 @@ extension $ToolsRouteExtension on ToolsRoute {
 
 extension $BorrowedToolsRouteExtension on BorrowedToolsRoute {
   static BorrowedToolsRoute _fromState(GoRouterState state) =>
-      BorrowedToolsRoute();
+      BorrowedToolsRoute(
+        toolsId: state.uri.queryParameters['tools-id']!,
+      );
 
   String get location => GoRouteData.$location(
         '/tools/borrowed',
+        queryParams: {
+          'tools-id': toolsId,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

@@ -57,8 +57,14 @@ class SplashRoute extends GoRouteData {
 }
 
 class BorrowedToolsRoute extends GoRouteData {
+  final String toolsId;
+  BorrowedToolsRoute({
+    required this.toolsId,
+  });
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const BorrowedToolsPage();
+    return BorrowedToolsPage(
+      toolsId: toolsId,
+    );
   }
 }
