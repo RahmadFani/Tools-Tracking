@@ -1,9 +1,10 @@
 part of '../borrowed_tools.dart';
 
 class _BorrowedToolsForm extends StatefulWidget {
-  const _BorrowedToolsForm({required this.toolsId});
+  const _BorrowedToolsForm({required this.tool});
 
-  final String toolsId;
+  final Tools tool;
+  String get toolsId => tool.idUnique;
 
   @override
   State<_BorrowedToolsForm> createState() => _BorrowedToolsFormState();
@@ -28,95 +29,105 @@ class _BorrowedToolsFormState extends State<_BorrowedToolsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FriendsBloc, FriendsState>(
-      builder: (context, friendsState) {
-        return Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Tambahkan Peminjam',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Autocomplete<Friends>(
-                    optionsBuilder: (textEditingValue) {
-                      if (textEditingValue.text == '') {
-                        return const Iterable<Friends>.empty();
-                      }
-                      return friendsState.friends.where((Friends fr) {
-                        return fr.uniqueName.contains(
-                          textEditingValue.text
-                              .toLowerCase()
-                              .replaceAll(' ', '/'),
-                        );
-                      });
-                    },
-                    displayStringForOption: (option) {
-                      return option.name;
-                    },
-                    onSelected: (option) {
-                      setState(() {
-                        friends = option;
-                        _controller.text = option.name;
-                      });
-                    },
-                    fieldViewBuilder: (BuildContext context,
-                        TextEditingController textEditingController,
-                        FocusNode focusNode,
-                        VoidCallback onFieldSubmitted) {
-                      return TextField(
-                        decoration: const InputDecoration(
-                            labelText: 'Peminjam',
-                            hintText: 'Masukkan nama peminjam',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(),
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10)),
-                        controller: _controller,
-                        focusNode: focusNode,
-                        onChanged: (value) {
-                          textEditingController.text = value;
-                          friends = null;
-                        },
-                        onSubmitted: (String value) {
-                          onFieldSubmitted.call();
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: _submit,
-                      child: const Text(
-                        'Pinjamkan',
+    return BlocBuilder<BorrowedToolsBloc, BorrowedToolsState>(
+      builder: (context, borrowedState) {
+        final remaining = widget.tool.count -
+            borrowedState.borrowed
+                .where((element) => element.toolId == widget.toolsId)
+                .map((e) => e.borrowedCount)
+                .sum;
+        return BlocBuilder<FriendsBloc, FriendsState>(
+          builder: (context, friendsState) {
+            return Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Tambahkan Peminjam',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Autocomplete<Friends>(
+                        optionsBuilder: (textEditingValue) {
+                          if (textEditingValue.text == '') {
+                            return const Iterable<Friends>.empty();
+                          }
+                          return friendsState.friends.where((Friends fr) {
+                            return fr.uniqueName.contains(
+                              textEditingValue.text
+                                  .toLowerCase()
+                                  .replaceAll(' ', '/'),
+                            );
+                          });
+                        },
+                        displayStringForOption: (option) {
+                          return option.name;
+                        },
+                        onSelected: (option) {
+                          setState(() {
+                            friends = option;
+                            _controller.text = option.name;
+                          });
+                        },
+                        fieldViewBuilder: (BuildContext context,
+                            TextEditingController textEditingController,
+                            FocusNode focusNode,
+                            VoidCallback onFieldSubmitted) {
+                          return TextField(
+                            decoration: const InputDecoration(
+                                labelText: 'Peminjam',
+                                hintText: 'Masukkan nama peminjam',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(),
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 10)),
+                            controller: _controller,
+                            focusNode: focusNode,
+                            onChanged: (value) {
+                              textEditingController.text = value;
+                              friends = null;
+                            },
+                            onSubmitted: (String value) {
+                              onFieldSubmitted.call();
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: remaining == 0 ? null : _submit,
+                          child: const Text(
+                            'Pinjamkan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );
@@ -126,6 +137,7 @@ class _BorrowedToolsFormState extends State<_BorrowedToolsForm> {
   ///
   /// Need clean this _submit function to many repeat code
   void _submit() async {
+    FocusScope.of(context).unfocus();
     if (_controller.text.isEmpty) {
       context.showCustomAlertWaiting(
           message: 'Harap nama di isi',

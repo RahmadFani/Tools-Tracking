@@ -66,7 +66,7 @@ class BorrowedToolsView extends StatelessWidget {
             height: 1,
           ),
           _BorrowedToolsForm(
-            toolsId: tool.idUnique,
+            tool: tool,
           )
         ],
       ),
