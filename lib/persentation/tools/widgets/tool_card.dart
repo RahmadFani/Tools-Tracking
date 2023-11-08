@@ -1,7 +1,9 @@
 part of '../tools.dart';
 
 class _ToolCard extends StatelessWidget {
-  const _ToolCard();
+  const _ToolCard(this.tool);
+
+  final Tools tool;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,9 @@ class _ToolCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const _LabelCard(
+              _LabelCard(
                 color: Colors.red,
-                text: 'Sisa 1',
+                text: 'Sisa ${tool.count}',
               ),
               const SizedBox(
                 width: 6,
@@ -46,7 +48,7 @@ class _ToolCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Image.asset(
-                    'assets/tools/wrench.jpg',
+                    tool.assets,
                     height: 60,
                     width: 60,
                   ),
@@ -59,9 +61,9 @@ class _ToolCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Kunci Inggris',
-                      style: TextStyle(
+                    Text(
+                      tool.title,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
@@ -103,13 +105,14 @@ class _LabelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: BorderRadius.circular(4)),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
       child: Text(
         text,
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+        style:
+            TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 13),
       ),
     );
   }
