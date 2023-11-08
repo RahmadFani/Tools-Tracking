@@ -10,7 +10,10 @@ part 'friends_event.dart';
 part 'friends_bloc.g.dart';
 
 class FriendsBloc extends HydratedBloc<FriendsEvent, FriendsState> {
-  FriendsBloc() : super(const FriendsState()) {
+  FriendsBloc()
+      : super(FriendsState(
+          friends: Friends.jokoFriends,
+        )) {
     on<AddFriend>(_onAddFriend);
   }
 

@@ -5,9 +5,18 @@ class ToolsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ToolsBloc(),
-      child: const ToolsView(),
+    return Scaffold(
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<BorrowedToolsBloc>.value(
+            value: getIt<BorrowedToolsBloc>(),
+          ),
+        ],
+        child: BlocProvider(
+          create: (context) => ToolsBloc(),
+          child: const ToolsView(),
+        ),
+      ),
     );
   }
 }

@@ -7,94 +7,103 @@ class _ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            color: Colors.grey,
-          )),
-      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Row(
+    return BlocBuilder<BorrowedToolsBloc, BorrowedToolsState>(
+      builder: (context, state) {
+        final borrowed = state.borrowed
+            .where((element) => element.toolId == tool.idUnique)
+            .toList();
+        return Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(
+                color: Colors.grey,
+              )),
+          margin: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+          padding: const EdgeInsets.all(8),
+          child: Column(
             children: [
-              _LabelCard(
-                color: Colors.red,
-                text: 'Sisa ${tool.count}',
-              ),
-              const SizedBox(
-                width: 6,
-              ),
-              _LabelCard(
-                color: Theme.of(context).primaryColor,
-                text: 'Dipinjam 4',
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Image.asset(
-                    tool.assets,
-                    height: 60,
-                    width: 60,
+              Row(
+                children: [
+                  _LabelCard(
+                    color: Colors.red,
+                    text: 'Sisa ${tool.count - borrowed.length}',
                   ),
-                ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  _LabelCard(
+                    color: Theme.of(context).primaryColor,
+                    text:
+                        'Dipinjam ${borrowed.map((e) => e.borrowedCount).sum}',
+                  ),
+                ],
               ),
               const SizedBox(
-                width: 8,
+                height: 8,
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      tool.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey, width: 2),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Image.asset(
+                        tool.assets,
+                        height: 60,
+                        width: 60,
                       ),
                     ),
-                    const SizedBox(
-                      height: 4,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tool.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: () {
+                              BorrowedToolsRoute(toolsId: tool.idUnique)
+                                  .go(context);
+                            },
+                            child: const Text(
+                              'Pinjamkan',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      height: 40,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {
-                          BorrowedToolsRoute(toolsId: tool.idUnique)
-                              .go(context);
-                        },
-                        child: const Text(
-                          'Pinjamkan',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+                  )
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 part 'friends.g.dart';
 
 @JsonSerializable()
@@ -17,4 +18,12 @@ class Friends {
       _$FriendsFromJson(json);
 
   Map<String, dynamic> toJson() => _$FriendsToJson(this);
+
+  static List<Friends> jokoFriends = [
+    Friends(name: 'Joni', uid: const Uuid().v4()),
+    Friends(name: 'Sentosa', uid: const Uuid().v4()),
+    Friends(name: 'Siti', uid: const Uuid().v4()),
+    Friends(name: 'Sari', uid: const Uuid().v4()),
+    Friends(name: 'Bagas', uid: const Uuid().v4()),
+  ];
 }

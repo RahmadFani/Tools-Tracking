@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tools_tracking/persentation/app/app.dart';
 import 'package:tools_tracking/persentation/borrowed_tools/borrowed_tools.dart';
+import 'package:tools_tracking/persentation/friends/friends.dart';
 
 import 'package:tools_tracking/persentation/splash/splash.dart';
 import 'package:tools_tracking/persentation/tools/tools.dart';
@@ -19,6 +20,7 @@ final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
         TypedGoRoute<BorrowedToolsRoute>(path: 'borrowed'),
       ],
     ),
+    TypedGoRoute<FriendsRoute>(path: '/friends')
   ],
 )
 class AppRoute extends ShellRouteData {
@@ -43,8 +45,31 @@ class AppRoute extends ShellRouteData {
 
 class ToolsRoute extends GoRouteData {
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const ToolsPage();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CustomTransitionPage(
+      child: const ToolsPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
+  }
+}
+
+class FriendsRoute extends GoRouteData {
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CustomTransitionPage(
+      child: const FriendsPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
   }
 }
 

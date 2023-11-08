@@ -25,6 +25,10 @@ RouteBase get $appRoute => ShellRouteData.$route(
             ),
           ],
         ),
+        GoRouteData.$route(
+          path: '/friends',
+          factory: $FriendsRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -60,6 +64,23 @@ extension $BorrowedToolsRouteExtension on BorrowedToolsRoute {
         queryParams: {
           'tools-id': toolsId,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $FriendsRouteExtension on FriendsRoute {
+  static FriendsRoute _fromState(GoRouterState state) => FriendsRoute();
+
+  String get location => GoRouteData.$location(
+        '/friends',
       );
 
   void go(BuildContext context) => context.go(location);
