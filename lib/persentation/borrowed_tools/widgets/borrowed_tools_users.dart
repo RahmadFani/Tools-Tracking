@@ -11,6 +11,7 @@ class _BorrowedToolsUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+      key: const Key('_BorrowedToolsUsers'),
       providers: [
         BlocProvider<BorrowedToolsBloc>.value(
           value: getIt<BorrowedToolsBloc>(),

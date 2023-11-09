@@ -12,6 +12,7 @@ class _BorrowedToolsBorrowTo extends StatelessWidget {
         final borrowed =
             state.borrowed.where((element) => element.toolId == tool.idUnique);
         return ListTile(
+          key: const Key('_listTileOntapBorrowToUser'),
           onTap: borrowed.isEmpty
               ? null
               : () {
