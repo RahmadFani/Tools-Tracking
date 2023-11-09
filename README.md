@@ -1,16 +1,39 @@
-# tools_tracking
+# PT Asli Rancangan Indonesia
 
-A new Flutter project.
+FLUTTER ASSESSMENT TEST
 
-## Getting Started
+Name: Rahmad Fani
 
-This project is a starting point for a Flutter application.
+### APP STACK :dizzy:
+- MVVM
+- BLOC
+- GetIt (Injection)
+- GoRouter (Navigation)
+- Unit Testing Coverage (40.9%) [ON-PROGRESS]
 
-A few resources to get you started if this is your first Flutter project:
+### FEATURED :boom:
+- OFFLINE MODE
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### How to use app
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> Run Flutter
+``` terminal
+flutter pub get
+flutter run 
+```
+
+> Generate build_runner
+``` terminal
+dart run build_runner build
+```
+
+> Generate Testing Unit Coverage
+``` terminal
+flutter test --coverage
+```
+
+
+> Build App Android
+``` terminal
+flutter buid apk
+```
