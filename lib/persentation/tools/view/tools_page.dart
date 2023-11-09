@@ -45,8 +45,9 @@ class ToolsView extends StatelessWidget {
                 ),
                 Expanded(
                     child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      _ToolCard(state.tools[index]),
+                  itemBuilder: (context, index) {
+                    return _ToolCard(state.tools[index]);
+                  },
                   itemCount: state.tools.length,
                 ))
               ],
